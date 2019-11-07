@@ -7,24 +7,15 @@ namespace EzShopManagement
     {
         struct Product
         {
-            public string prodCode;
-            public string prodName;
-            public DateTime prodExp;
-            public string prodCompany;
-            public int prodYear;
-            public string prodCategory;
+            public string Code;
+            public string Name;
+            public DateTime Exp;
+            public string Company;
+            public int Year;
+            public string Category;
         }
 
         static List<Product> products = new List<Product>();
-
-        // Check if a string contains another string
-        static Func<string, string, bool> Found = (inString, _key) =>
-          {
-              for (int i = 0; i <= inString.Length - _key.Length; i++)
-                  if (inString.Substring(i, _key.Length).ToLower() == _key.ToLower())
-                      return true;
-              return false;
-          };
 
         static void AddProd(ref List<Product> products)
         {
@@ -99,19 +90,19 @@ namespace EzShopManagement
             // Add product to list
             products.Add(new Product
             {
-                prodCode = _code,
-                prodName = _name,
-                prodExp = _exp,
-                prodCompany = _company,
-                prodYear = _year,
-                prodCategory = _category
+                Code = _code,
+                Name = _name,
+                Exp = _exp,
+                Company = _company,
+                Year = _year,
+                Category = _category
             });
         }
 
         // Delete by product code
         static void DelProd(ref List<Product> products, string _key)
         {
-            products.RemoveAll(product => product.prodCode.ToLower() == _key.ToLower());
+            products.RemoveAll(product => product.Code.ToLower() == _key.ToLower());
             Console.Write("\nProduct successfully deleted. Press any key to continue...");
         }
 
@@ -120,16 +111,16 @@ namespace EzShopManagement
         {
             bool exist = false;
             foreach (Product prod in products)
-                if (prod.prodCode.ToLower() == _key.ToLower())
+                if (prod.Code.ToLower() == _key.ToLower())
                 {
                     exist = true;
                     Product temp = prod;
-                    Console.Write("\nNew product code: "); temp.prodCode = Console.ReadLine();
-                    Console.Write("New product name: "); temp.prodName = Console.ReadLine();
-                    Console.Write("New expiry date [DD/MM/YYYY]: "); temp.prodExp = DateTime.Parse(Console.ReadLine());
-                    Console.Write("New production company: "); temp.prodCompany = Console.ReadLine();
-                    Console.Write("New production year: "); temp.prodYear = int.Parse(Console.ReadLine());
-                    Console.Write("New product category: "); temp.prodCategory = Console.ReadLine();
+                    Console.Write("\nNew product code: "); temp.Code = Console.ReadLine();
+                    Console.Write("New product name: "); temp.Name = Console.ReadLine();
+                    Console.Write("New expiry date [DD/MM/YYYY]: "); temp.Exp = DateTime.Parse(Console.ReadLine());
+                    Console.Write("New production company: "); temp.Company = Console.ReadLine();
+                    Console.Write("New production year: "); temp.Year = int.Parse(Console.ReadLine());
+                    Console.Write("New product category: "); temp.Category = Console.ReadLine();
                     products.Add(temp);
                     products.Remove(prod);
                     break;
@@ -146,10 +137,10 @@ namespace EzShopManagement
             bool exist = false;
             Console.WriteLine();
             foreach (Product prod in products)
-                if (Found(prod.prodName, _key))
+                if (prod.Name.Contains(_key))
                 {
                     exist = true;
-                    Console.WriteLine($"Code: {prod.prodCode} | Name: {prod.prodName} | Exp: {prod.prodExp.ToShortDateString()} | Company: {prod.prodCompany} | Production year: {prod.prodYear} | Category: {prod.prodCategory}");
+                    Console.WriteLine($"Code: {prod.Code} | Name: {prod.Name} | Exp: {prod.Exp.ToShortDateString()} | Company: {prod.Company} | Production year: {prod.Year} | Category: {prod.Category}");
                 }
             if (!exist)
                 Console.Write($"There is no result for {_key}. Press any key to continue...");
@@ -161,10 +152,10 @@ namespace EzShopManagement
             bool exist = false;
             Console.WriteLine();
             foreach (Product prod in products)
-                if (Found(prod.prodCategory, _key))
+                if (prod.Category.Contains(_key))
                 {
                     exist = true;
-                    Console.WriteLine($"Code: {prod.prodCode} | Name: {prod.prodName} | Exp: {prod.prodExp.ToShortDateString()} | Company: {prod.prodCompany} | Production year: {prod.prodYear} | Category: {prod.prodCategory}");
+                    Console.WriteLine($"Code: {prod.Code} | Name: {prod.Name} | Exp: {prod.Exp.ToShortDateString()} | Company: {prod.Company} | Production year: {prod.Year} | Category: {prod.Category}");
                 }
             if (!exist)
                 Console.Write($"There is no product in category {_key}. Press any key to continue...");
@@ -173,7 +164,7 @@ namespace EzShopManagement
         // Delete a category
         static void DelCat(ref List<Product> products, string _key)
         {
-            products.RemoveAll(product => product.prodCategory.ToLower() == _key.ToLower());
+            products.RemoveAll(product => product.Category.ToLower() == _key.ToLower());
             Console.Write("\nCategory successfully deleted. Press any key to continue...");
         }
 
